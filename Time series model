@@ -1,0 +1,109 @@
+1. Address missing values in the dataset
+
+To handle missing values in the dataset, we can fill in missing values with the median for numerical columns and the mode for categorical columns. We can use the following code to do this:
+
+Python
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('craigslist_vehicles.csv')
+
+# Fill in missing values with the median for numerical columns and the mode for categorical columns
+df = df.fillna(df.median(), axis=1, numeric_only=True)
+df = df.fillna(df.mode(), axis=1, inplace=True)
+Use code with caution. Learn more
+2. Ensure that the data types of the columns are appropriate
+
+We need to make sure that the posting_date column is converted to a datetime data type. We can use the following code to do this:
+
+Python
+# Convert the 'posting_date' column to a datetime data type
+df['posting_date'] = pd.to_datetime(df['posting_date'])
+Use code with caution. Learn more
+3. Create a datetime index for the dataset
+
+We can use the posting_date column to create a datetime index for the dataset. This will facilitate the analysis of temporal patterns. We can use the following code to do this:
+
+Python
+# Create a datetime index for the dataset
+df = df.set_index('posting_date')
+Use code with caution. Learn more
+4. Explore the data using various visualizations and statistical analysis techniques
+
+We can explore the data using various visualizations and statistical analysis techniques to understand temporal patterns, identify seasonal trends, and analyze demand-supply dynamics by region and vehicle type. We can use the following code to generate a few basic visualizations:
+
+Python
+import matplotlib.pyplot as plt
+
+# Plot the time series of the average price of vehicles
+plt.plot(df['price'].mean())
+plt.title('Average Price of Vehicles Over Time')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
+
+# Plot the seasonal trend in the price of vehicles
+plt.plot(df['price'].groupby(df.index.month).mean())
+plt.title('Seasonal Trend in Vehicle Prices')
+plt.xlabel('Month')
+plt.ylabel('Price')
+plt.show()
+
+# Plot the demand-supply dynamics for vehicles by region
+plt.plot(df.groupby('region')['price'].mean())
+plt.title('Demand-Supply Dynamics for Vehicles by Region')
+plt.xlabel('Region')
+plt.ylabel('Price')
+plt.show()
+
+# Plot the demand-supply dynamics for vehicles by vehicle type
+plt.plot(df.groupby('vehicle_type')['price'].mean())
+plt.title('Demand-Supply Dynamics for Vehicles by Vehicle Type')
+plt.xlabel('Vehicle Type')
+plt.ylabel('Price')
+plt.show()
+Use code with caution. Learn more
+5. Build the time-series chart
+
+We can build a time-series chart using the following code:
+
+Python
+import numpy as np
+from statsmodels.tsa.seasonal import seasonal_decompose
+
+# Decompose the time series into trend, seasonal, and residual components
+trend, seasonal, residual = seasonal_decompose(df['price'], freq=12)
+
+# Plot the trend component of the time series
+plt.plot(trend)
+plt.title('Trend in Vehicle Prices')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
+
+# Plot the seasonal component of the time series
+plt.plot(seasonal)
+plt.title('Seasonal Trend in Vehicle Prices')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
+
+# Plot the residual component of the time series
+plt.plot(residual)
+plt.title('Residual Component of Vehicle Prices')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.show()
+Use code with caution. Learn more
+6. Create a GitHub Repository and push your work there
+
+We can create a GitHub Repository and push our work there using the following steps:
+
+Create a new repository on GitHub.
+Clone the repository to your local machine.
+Copy your code and datasets to the local repository.
+Commit your changes and push them to the remote repository.
+Conclusion
+
+These are the steps to create a time-series model using the Craigslist Vehicles Dataset. We can use the insights gained from the data exploration to build a more sophisticated time-series model
+
